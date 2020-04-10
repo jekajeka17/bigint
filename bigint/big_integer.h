@@ -52,6 +52,18 @@ struct big_integer
     friend std::string to_string(big_integer const& a);
 
 private:
+    // TODO: Implement private methods within big_integer_private.cpp
+
+    big_integer& operator*=(uint64_t);          // TODO: Bigint on digit multiplication
+    uint64_t digit(size_t);                     // TODO: Digit extractor
+
+    big_integer& shrink();                      // TODO: Remove trailing zeros
+
+    uint8_t compare(big_integer const& rhs);    // TODO: Bigint comparator:
+                                                //  return -1 if this less than rhs,
+                                                //  return 1 if this greater than rhs
+                                                //  return 0 if this equals rhs
+
     std::vector<uint64_t> _module;
     bool _sign;
 };
