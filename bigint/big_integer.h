@@ -2,15 +2,19 @@
 #define BIG_INTEGER_H
 
 #include <cstddef>
-#include <gmp.h>
+#include <vector>
 #include <iosfwd>
+#include <cstdint>
+#include <cstdlib>
+#include <string>
+
 
 struct big_integer
 {
     big_integer();
     big_integer(big_integer const& other);
     big_integer(int a);
-    explicit big_integer(std::string const& str);
+    explicit big_integer(std::string str);
     ~big_integer();
 
     big_integer& operator=(big_integer const& other);
@@ -48,7 +52,8 @@ struct big_integer
     friend std::string to_string(big_integer const& a);
 
 private:
-    mpz_t mpz;
+    std::vector<uint64_t> _module;
+    bool _sign;
 };
 
 big_integer operator+(big_integer a, big_integer const& b);
