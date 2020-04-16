@@ -35,15 +35,16 @@ big_integer big_integer::operator*=(const uint64_t a) {
 }
 
 big_integer& big_integer::shrink() {
-    std::string s;
-    int j = 0;
-    while (_module[j] == 0) {
-        j++;
+    size_t cnt = _module.size();
+    for (size_t i = _module.size(); i-- > 0;) {
+        if (_module[i] == 0) {
+            cnt--;
+        }
     }
-    for (size_t i = j; i < _module.size(); ++i) {
-        s += (char)_module[i];
+    if (cnt == 0) {
+        _sign = false;
     }
-    *this = big_integer(s);
+    _module.resize(cnt);
     return *this;
 }
 
@@ -73,11 +74,52 @@ uint8_t big_integer::compare(big_integer const &rhs) {
     return 0;
 }
 
-uint64_t big_integer::digit(size_t i) {
+uint64_t big_integer::digit(size_t i) const {
     if (i >= _module.size()) {
         return 0;
     } else {
         return _module[i];
     }
+}
+
+big_integer& big_integer::add(const big_integer &rhs, const size_t pos) {
+    uint64_t carry = 0;
+    size_t length = std::max(_module.size(), rhs._module.size() + pos);
+    _module.resize(length, 0);
+    for (size_t i = pos; i < length; ++i) {
+        uint64_t a = digit(i);
+        uint64_t b = rhs.digit(i - pos);
+        __asm__(
+                "xor %%rdx, %%rdx;"
+                "add %%rax, %%rbx;"
+                "adc $0, %%rdx;"
+                "add %%rax, %%rcx;"
+                "adc $0, %%rdx;"
+                : "=a" (_module[i]), "=d" (carry)
+                : "a" (a), "b" (b), "c" (carry)
+                );
+    }
+    _module.push_back(carry);
+    shrink();
+    return *this;
+}
+
+big_integer& big_integer::sub(const big_integer &rhs) {
+    uint64_t borrow = 0;
+    for (size_t i = 0; i < _module.size(); ++i) {
+        uint64_t a = digit(i);
+        uint64_t b = rhs.digit(i);
+        __asm__(
+                "xor %%rdx, %%rdx;"
+                "sub %%rax, %%rbx;"
+                "adc $0, %%rdx;"
+                "sub %%rax, %%rcx;"
+                "adc $0, %%rdx;"
+                : "=a" (_module[i]), "=d" (borrow)
+                : "a" (a), "b" (b), "c" (borrow)
+                );
+    }
+    shrink();
+    return *this;
 }
 
