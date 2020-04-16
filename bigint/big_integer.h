@@ -7,6 +7,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <string>
+#include <cmath>
 
 
 struct big_integer
@@ -54,7 +55,7 @@ struct big_integer
 private:
     // TODO: Implement private methods within big_integer_private.cpp
 
-    big_integer& operator*=(uint64_t);          // TODO: Bigint on digit multiplication
+    big_integer& operator*=(uint64_t a);          // TODO: Bigint on digit multiplication
     uint64_t digit(size_t);                     // TODO: Digit extractor
 
     big_integer& shrink();                      // TODO: Remove trailing zeros
