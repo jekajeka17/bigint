@@ -1,18 +1,37 @@
 #include "big_integer.h"
 
-big_integer& big_integer::operator*=(const uint64_t a) {
+big_integer big_integer::operator*=(const uint64_t a) {
     uint64_t carry = 0;
-    uint64_t sum = 0;
-    int i = _module.size();
-    while(_module[i] > 0) {
-        --i;
-        sum = (_module[i] * a) % (uint64_t )pow(2, 64) + carry;
-        carry = sum / (uint64_t )pow(2, 64);
-        _module[i] = sum;
+
+    big_integer res;
+    res._module.reserve(_module.size() + 1);
+
+    for (size_t i = 0; i < _module.size(); ++i) {
+        uint64_t d0 = digit(i);
+        uint64_t d1;
+
+        __asm__ (
+            "mul %%rbx;"
+            "add %%rcx, %%rax;"
+            "adc $0, %%rdx;"
+            : "=a" (d1), "=d" (carry)
+            : "a" (d0), "b" (a), "c" (carry)
+        );
+
+        // RAX <- d0
+        // RBX <- a
+        // RCX <- carry
+        // d0 * a = RDX | RAX
+
+        res._module.push_back(d1);
     }
-    _module[i - 1] = carry;
-    _sign = false;
-    return *this;
+
+    if (carry != 0) {
+        res._module.push_back(carry);
+    }
+
+    res.shrink();
+    return res;
 }
 
 big_integer& big_integer::shrink() {
