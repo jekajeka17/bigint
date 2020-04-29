@@ -24,13 +24,15 @@ big_integer& big_integer::operator+=(big_integer const &rhs) {
 }
 
 big_integer& big_integer::operator-=(big_integer const &rhs) {
+    return *this += -rhs;
+}
 
-    if (!rhs._sign) {
-        rhs._sign = true;
-    } else {
-        rhs._sign = false;
-    }
-    *this += rhs;
+big_integer big_integer::operator+() const {
+    return big_integer(*this);
+}
 
-    return *this;
+big_integer big_integer::operator-() const {
+    big_integer res = *this;
+    res._sign = (!_module.empty()) && (!_sign);
+    return res;
 }
