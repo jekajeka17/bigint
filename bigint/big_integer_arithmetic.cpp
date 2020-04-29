@@ -1,49 +1,25 @@
 #include "big_integer.h"
 
 big_integer& big_integer::operator+=(big_integer const &rhs) {
-    uint8_t com1 = sign_compare(rhs);
-    uint8_t com2 = compare_without_sign(rhs);
+    int8_t com2 = module_compare(rhs);
 
-    if (com1 == -1 && com2 == 1) {
-        sub(rhs);
-        _sign = true;
+    if (_sign == rhs._sign) {
+        add(rhs);
+    } else {
+        if (com2 == -1) {
+            big_integer res = rhs;
+            res.sub(*this);
+            *this = res;
+        } else {
+            sub(rhs);
+        }
+        if (_module.empty()) {
+            _sign = false;
+        } else {
+            _sign ^= true;
+        }
     }
-    if (com1 == -1 && com2 == -1) {
-        rhs.sub(*this);
-        this = rhs;
-    }
-    if (com1 == 1 && com2 == 1) {
-        sub(rhs);
-    }
-    if (com1 == 1 && com2 == -1) {
-        rhs.sub(*this);
-        this = rhs;
-        _sign = true;
-    }
-    if (com1 == 0 && com2 == 0) {
-        uint64_t pos = _module.size() - rhs._module.size();
-        add(rhs, pos);
-    }
-    if (com1 == 0 && com2 == 1 && !_sign) {
-        uint64_t pos = _module.size() - rhs._module.size();
-        add(rhs, pos);
-    }
-    if (com1 == 0 && com2 == -1 && !_sign) {
-        uint64_t pos = rhs._module.size() - _module.size();
-        rhs.add(*this, pos);
-        this = rhs;
-    }
-    if (com1 == 0 && com2 == 1 && _sign) {
-        uint64_t pos = _module.size() - rhs._module.size();
-        add(rhs, pos);
-        _sign = false;
-    }
-    if (com1 == 0 && com2 == -1 && _sign) {
-        uint64_t pos = rhs._module.size() - _module.size();
-        rhs.add(*this, pos);
-        this = rhs;
-        _sign = false;
-    }
+
     return *this;
 }
 

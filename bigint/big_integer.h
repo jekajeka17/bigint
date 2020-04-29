@@ -55,15 +55,15 @@ struct big_integer
 private:
 
     big_integer operator*=(uint64_t);
-    big_integer& add(const big_integer &rhs, const size_t pos);
+    big_integer& add(const big_integer &rhs, size_t pos = 0);
     big_integer& sub(const big_integer &rhs);
     uint64_t digit(size_t) const;
 
     big_integer& shrink();
 
-    uint8_t compare(big_integer const& rhs);
-    uint8_t compare_without_sign(big_integer const& rhs);
-    uint8_t sign_compare(big_integer const& rhs);
+    int8_t compare(big_integer const& rhs);
+    int8_t module_compare(big_integer const &rhs);
+    int8_t sign_compare(big_integer const& rhs);
 
     std::vector<uint64_t> _module;
     bool _sign;
