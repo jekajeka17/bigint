@@ -74,6 +74,35 @@ uint8_t big_integer::compare(big_integer const &rhs) {
     return 0;
 }
 
+uint8_t big_integer::compare_without_sign(big_integer const &rhs) {
+    if (_module.size() < rhs._module.size()) {
+        return -1;
+    }
+    if (_module.size() > rhs._module.size()) {
+        return 1;
+    }
+
+    for (size_t i = _module.size(); i-- > 0;) {
+        if (_module[i] < rhs._module[i]) {
+            return -1;
+        }
+        if (_module[i] > rhs._module[i]) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+uint8_t big_integer::sign_compare(big_integer const &rhs) {
+    if (_sign && !rhs._sign) {
+        return -1;
+    }
+    if (!_sign && rhs._sign) {
+        return 1;
+    }
+    return 0;
+}
+
 uint64_t big_integer::digit(size_t i) const {
     if (i >= _module.size()) {
         return 0;

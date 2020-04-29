@@ -62,6 +62,8 @@ private:
     big_integer& shrink();
 
     uint8_t compare(big_integer const& rhs);
+    uint8_t compare_without_sign(big_integer const& rhs);
+    uint8_t sign_compare(big_integer const& rhs);
 
     std::vector<uint64_t> _module;
     bool _sign;
