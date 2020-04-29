@@ -10,6 +10,7 @@ add_executable(big_integer_testing
                big_integer_arithmetic.cpp
                big_integer_private.cpp
                big_integer_ctors.cpp
+               big_intger_commons.cpp
                gtest/gtest-all.cc
                gtest/gtest.h
                gtest/gtest_main.cc)

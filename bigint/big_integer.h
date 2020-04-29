@@ -54,7 +54,8 @@ struct big_integer
 
 private:
 
-    big_integer operator*=(uint64_t);
+    big_integer mul_digit(uint64_t);
+    std::pair<big_integer, uint64_t> div_digit(uint64_t);
     big_integer& add(const big_integer &rhs, size_t pos = 0);
     big_integer& sub(const big_integer &rhs);
     uint64_t digit(size_t) const;
@@ -89,6 +90,7 @@ bool operator>(big_integer const& a, big_integer const& b);
 bool operator<=(big_integer const& a, big_integer const& b);
 bool operator>=(big_integer const& a, big_integer const& b);
 
+//TODO: Implement!
 std::string to_string(big_integer const& a);
 std::ostream& operator<<(std::ostream& s, big_integer const& a);
 

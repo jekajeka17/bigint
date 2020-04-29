@@ -23,4 +23,4 @@ big_integer::big_integer(std::string str) {
     }
 }
 
-
+big_integer::~big_integer() = default;

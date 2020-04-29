@@ -1,6 +1,6 @@
 #include "big_integer.h"
 
-big_integer big_integer::operator*=(const uint64_t a) {
+big_integer big_integer::mul_digit(const uint64_t a) {
     uint64_t carry = 0;
 
     big_integer res;
@@ -32,6 +32,30 @@ big_integer big_integer::operator*=(const uint64_t a) {
 
     res.shrink();
     return res;
+}
+
+std::pair<big_integer, uint64_t> big_integer::div_digit(uint64_t x) {
+    uint64_t remainder = 0;
+    big_integer res;
+
+    for (size_t i = 0; i < _module.size(); ++i) {
+        uint64_t d = digit(_module.size() - 1 - i);
+        uint64_t r = 0;
+        __asm__ (
+            "div %%rbx;"
+            : "=a" (r), "=d" (remainder)
+            : "a" (d), "b" (x), "d" (remainder)
+        );
+
+        // RDX | RAX -> result -> RAX, remainder -> RDX
+
+        res._module.push_back(r);
+    }
+
+    std::reverse(res._module.begin(), res._module.end());
+
+    res.shrink();
+    return std::make_pair(res, remainder);
 }
 
 big_integer& big_integer::shrink() {
