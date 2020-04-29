@@ -37,11 +37,13 @@ struct big_integer
     big_integer operator-() const;
     big_integer operator~() const;
 
-    big_integer& operator++();
-    big_integer operator++(int);
+    // TODO: Implement!
+    big_integer& operator++();      // ++i, return incremented reference to *this
+    const big_integer operator++(int);    // i++, return incremented copy of *this
 
+    // TODO: Implement!
     big_integer& operator--();
-    big_integer operator--(int);
+    const big_integer operator--(int);
 
     friend bool operator==(big_integer const& a, big_integer const& b);
     friend bool operator!=(big_integer const& a, big_integer const& b);
