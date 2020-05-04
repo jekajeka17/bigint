@@ -10,19 +10,15 @@ big_integer& big_integer::operator=(big_integer const& other) {
 }
 
 std::string to_string(const big_integer &a) {
-    // TODO: Implement!
     std::string s;
     big_integer tmp = a;
-    for (size_t i = a._module.size(); tmp > 0; --i) {
-        uint64_t res1 = tmp.digit(i) % 10;
-        s += res1 + '0';
-        tmp /= 10;
+    while (tmp > 0) {
+        std::pair<big_integer, uint64_t> res = tmp.div_digit(10);
+        s += static_cast<char>(res.second + '0');
+        tmp = res.first;
     }
 
-
-//    std::string s = "abd";
-//    std::reverse(s.begin(), s.end());
-
+    std::reverse(s.begin(), s.end());
     return s;
 }
 

@@ -62,9 +62,9 @@ private:
 
     big_integer& shrink();
 
-    int8_t compare(big_integer const& rhs);
-    int8_t module_compare(big_integer const &rhs);
-    int8_t sign_compare(big_integer const& rhs);
+    int8_t compare(big_integer const& rhs) const;
+    int8_t module_compare(big_integer const &rhs) const;
+    int8_t sign_compare(big_integer const& rhs) const;
 
     std::vector<uint64_t> _module;
     bool _sign;
@@ -90,7 +90,6 @@ bool operator>(big_integer const& a, big_integer const& b);
 bool operator<=(big_integer const& a, big_integer const& b);
 bool operator>=(big_integer const& a, big_integer const& b);
 
-//TODO: Implement!
 std::string to_string(big_integer const& a);
 std::ostream& operator<<(std::ostream& s, big_integer const& a);
 

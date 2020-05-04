@@ -67,3 +67,15 @@ const big_integer big_integer::operator--(int) {
     *this -= 1;
     return a;
 }
+
+big_integer operator+(big_integer a, big_integer const& b) {
+    return a += b;
+}
+
+big_integer operator-(big_integer a, big_integer const& b) {
+    return a -= b;
+}
+
+big_integer operator*(big_integer a, big_integer const& b) {
+    return a *= b;
+}

@@ -72,7 +72,7 @@ big_integer& big_integer::shrink() {
     return *this;
 }
 
-int8_t big_integer::compare(big_integer const &rhs) {
+int8_t big_integer::compare(big_integer const &rhs) const {
     if (_sign != rhs._sign) {
         return sign_compare(rhs);
     } else {
@@ -80,7 +80,7 @@ int8_t big_integer::compare(big_integer const &rhs) {
     }
 }
 
-int8_t big_integer::module_compare(big_integer const &rhs) {
+int8_t big_integer::module_compare(big_integer const &rhs) const {
     if (_module.size() < rhs._module.size()) {
         return -1;
     }
@@ -99,7 +99,7 @@ int8_t big_integer::module_compare(big_integer const &rhs) {
     return 0;
 }
 
-int8_t big_integer::sign_compare(big_integer const &rhs) {
+int8_t big_integer::sign_compare(big_integer const &rhs) const {
     if (_sign && !rhs._sign) {
         return -1;
     }
