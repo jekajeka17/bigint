@@ -12,11 +12,11 @@ big_integer& big_integer::operator=(big_integer const& other) {
 std::string to_string(const big_integer &a) {
     // TODO: Implement!
     std::string s;
-    big_integer res = a;
-    for (size_t i = a._module.size(); res > 0; --i) {
-        uint64_t res1 = res.digit(i) % 10;
+    big_integer tmp = a;
+    for (size_t i = a._module.size(); tmp > 0; --i) {
+        uint64_t res1 = tmp.digit(i) % 10;
         s += res1 + '0';
-        res /= 10;
+        tmp /= 10;
     }
 
 
@@ -25,3 +25,7 @@ std::string to_string(const big_integer &a) {
 
     return s;
 }
+
+// 60 -> 30 -> 15 -> 7 - > 3 -> 1 -> 0
+// 001111
+// 111100

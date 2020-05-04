@@ -37,11 +37,9 @@ struct big_integer
     big_integer operator-() const;
     big_integer operator~() const;
 
-    // TODO: Implement!
     big_integer& operator++();      // ++i, return incremented reference to *this
     const big_integer operator++(int);    // i++, return incremented copy of *this
 
-    // TODO: Implement!
     big_integer& operator--();
     const big_integer operator--(int);
 
