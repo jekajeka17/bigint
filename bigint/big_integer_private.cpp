@@ -63,6 +63,8 @@ big_integer& big_integer::shrink() {
     for (size_t i = _module.size(); i-- > 0;) {
         if (_module[i] == 0) {
             cnt--;
+        } else {
+            break;
         }
     }
     if (cnt == 0) {
@@ -126,9 +128,9 @@ big_integer& big_integer::add(const big_integer &rhs, const size_t pos) {
         uint64_t b = rhs.digit(i - pos);
         __asm__(
                 "xor %%rdx, %%rdx;"
-                "add %%rax, %%rbx;"
+                "add %%rbx, %%rax;"
                 "adc $0, %%rdx;"
-                "add %%rax, %%rcx;"
+                "add %%rcx, %%rax;"
                 "adc $0, %%rdx;"
                 : "=a" (_module[i]), "=d" (carry)
                 : "a" (a), "b" (b), "c" (carry)
@@ -146,9 +148,9 @@ big_integer& big_integer::sub(const big_integer &rhs) {
         uint64_t b = rhs.digit(i);
         __asm__(
                 "xor %%rdx, %%rdx;"
-                "sub %%rax, %%rbx;"
+                "sub %%rbx, %%rax;"
                 "adc $0, %%rdx;"
-                "sub %%rax, %%rcx;"
+                "sub %%rcx, %%rax;"
                 "adc $0, %%rdx;"
                 : "=a" (_module[i]), "=d" (borrow)
                 : "a" (a), "b" (b), "c" (borrow)
@@ -157,4 +159,3 @@ big_integer& big_integer::sub(const big_integer &rhs) {
     shrink();
     return *this;
 }
-

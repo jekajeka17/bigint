@@ -12,16 +12,15 @@ big_integer& big_integer::operator=(big_integer const& other) {
 std::string to_string(const big_integer &a) {
     std::string s;
     big_integer tmp = a;
-    while (tmp > 0) {
+    while (tmp != 0) {
         std::pair<big_integer, uint64_t> res = tmp.div_digit(10);
         s += static_cast<char>(res.second + '0');
         tmp = res.first;
+    }
+    if (a._sign) {
+        s += '-';
     }
 
     std::reverse(s.begin(), s.end());
     return s;
 }
-
-// 60 -> 30 -> 15 -> 7 - > 3 -> 1 -> 0
-// 001111
-// 111100

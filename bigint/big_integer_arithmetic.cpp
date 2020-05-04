@@ -5,16 +5,14 @@ big_integer& big_integer::operator+=(big_integer const &rhs) {
         add(rhs);
     } else {
         if (module_compare(rhs) == -1) {
-            big_integer res = rhs;
-            res.sub(*this);
-            *this = res;
+            big_integer tmp = rhs;
+            tmp.sub(*this);
+            *this = tmp;
         } else {
-            this->sub(rhs);
+            sub(rhs);
         }
         if (_module.empty()) {
             _sign = false;
-        } else {
-            _sign ^= true;
         }
     }
 

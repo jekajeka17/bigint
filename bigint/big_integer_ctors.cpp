@@ -15,12 +15,12 @@ big_integer::big_integer(const int a) {
 }
 
 big_integer::big_integer(std::string str) {
-    _sign = (str[0] == '-');
     for (size_t i = (str[0] == '-' || str[0] == '+') ? 1 : 0; i < str.size(); ++i) {
         int digit = static_cast<int>(str[i] - '0');
         *this *= 10;
         *this += digit;
     }
+    _sign = !_module.empty() && (str[0] == '-');
 }
 
 big_integer::~big_integer() = default;

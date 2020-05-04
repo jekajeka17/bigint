@@ -23,19 +23,19 @@ struct big_integer
     big_integer& operator+=(big_integer const& rhs);
     big_integer& operator-=(big_integer const& rhs);
     big_integer& operator*=(big_integer const& rhs);
-    big_integer& operator/=(big_integer const& rhs);
-    big_integer& operator%=(big_integer const& rhs);
+//    big_integer& operator/=(big_integer const& rhs);
+//    big_integer& operator%=(big_integer const& rhs);
 
-    big_integer& operator&=(big_integer const& rhs);
-    big_integer& operator|=(big_integer const& rhs);
-    big_integer& operator^=(big_integer const& rhs);
+//    big_integer& operator&=(big_integer const& rhs);
+//    big_integer& operator|=(big_integer const& rhs);
+//    big_integer& operator^=(big_integer const& rhs);
 
-    big_integer& operator<<=(int rhs);
-    big_integer& operator>>=(int rhs);
+//    big_integer& operator<<=(int rhs);
+//    big_integer& operator>>=(int rhs);
 
     big_integer operator+() const;
     big_integer operator-() const;
-    big_integer operator~() const;
+//    big_integer operator~() const;
 
     big_integer& operator++();      // ++i, return incremented reference to *this
     const big_integer operator++(int);    // i++, return incremented copy of *this
@@ -73,15 +73,15 @@ private:
 big_integer operator+(big_integer a, big_integer const& b);
 big_integer operator-(big_integer a, big_integer const& b);
 big_integer operator*(big_integer a, big_integer const& b);
-big_integer operator/(big_integer a, big_integer const& b);
-big_integer operator%(big_integer a, big_integer const& b);
+//big_integer operator/(big_integer a, big_integer const& b);
+//big_integer operator%(big_integer a, big_integer const& b);
 
-big_integer operator&(big_integer a, big_integer const& b);
-big_integer operator|(big_integer a, big_integer const& b);
-big_integer operator^(big_integer a, big_integer const& b);
+//big_integer operator&(big_integer a, big_integer const& b);
+//big_integer operator|(big_integer a, big_integer const& b);
+//big_integer operator^(big_integer a, big_integer const& b);
 
-big_integer operator<<(big_integer a, int b);
-big_integer operator>>(big_integer a, int b);
+//big_integer operator<<(big_integer a, int b);
+//big_integer operator>>(big_integer a, int b);
 
 bool operator==(big_integer const& a, big_integer const& b);
 bool operator!=(big_integer const& a, big_integer const& b);
@@ -91,6 +91,6 @@ bool operator<=(big_integer const& a, big_integer const& b);
 bool operator>=(big_integer const& a, big_integer const& b);
 
 std::string to_string(big_integer const& a);
-std::ostream& operator<<(std::ostream& s, big_integer const& a);
+//std::ostream& operator<<(std::ostream& s, big_integer const& a);
 
 #endif // BIG_INTEGER_H
