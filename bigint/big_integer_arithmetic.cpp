@@ -50,16 +50,24 @@ big_integer big_integer::operator-() const {
 
 big_integer& big_integer::operator++() {
     //TODO: Implement!
+    return *this += 1;
 }
 
 const big_integer big_integer::operator++(int) {
     //TODO: Implement!
+    big_integer a = *this;
+    *this += 1;
+    return a;
 }
 
 big_integer& big_integer::operator--() {
     //TODO: Implement!
+    return *this -= 1;
 }
 
 const big_integer big_integer::operator--(int) {
     //TODO: Implement!
+    big_integer a = *this;
+    *this -= 1;
+    return a;
 }
