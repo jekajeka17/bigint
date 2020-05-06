@@ -78,7 +78,7 @@ int8_t big_integer::compare(big_integer const &rhs) const {
     if (_sign != rhs._sign) {
         return sign_compare(rhs);
     } else {
-        return module_compare(rhs);
+        return module_compare(rhs) * (_sign ? -1 : 1);
     }
 }
 

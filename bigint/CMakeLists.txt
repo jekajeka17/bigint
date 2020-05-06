@@ -12,6 +12,7 @@ add_executable(
         big_integer_ctors.cpp
         big_integer_commons.cpp
         big_integer_cmp.cpp
+        big_integer_binary.cpp
         main.cpp
 )
 
@@ -24,9 +25,10 @@ add_executable(
         big_integer_ctors.cpp
         big_integer_commons.cpp
         big_integer_cmp.cpp
+        big_integer_binary.cpp
         gtest/gtest-all.cc
         gtest/gtest.h
-        gtest/gtest_main.cc main.cpp)
+        gtest/gtest_main.cc big_integer_binary.cpp)
 
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -pedantic")
