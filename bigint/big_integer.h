@@ -91,6 +91,6 @@ bool operator<=(big_integer const& a, big_integer const& b);
 bool operator>=(big_integer const& a, big_integer const& b);
 
 std::string to_string(big_integer const& a);
-//std::ostream& operator<<(std::ostream& s, big_integer const& a);
+std::ostream& operator<<(std::ostream& s, big_integer const& a);
 
 #endif // BIG_INTEGER_H

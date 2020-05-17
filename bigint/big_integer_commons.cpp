@@ -24,3 +24,8 @@ std::string to_string(const big_integer &a) {
     std::reverse(s.begin(), s.end());
     return s;
 }
+
+std::ostream& operator<<(std::ostream& s, const big_integer &a) {
+    s << to_string(a);
+    return s;
+}

@@ -66,6 +66,7 @@ big_integer& big_integer::operator<<=(int rhs) {
     auto shift = static_cast<size_t>(rhs);
     if (shift >= 64) {
         size_t cnt = shift / 64;
+        _module.resize(_module.size() + cnt);
         for (size_t i = _module.size() - 1; i >= cnt; --i) {
             _module[i] = _module[i - cnt];
         }
@@ -103,11 +104,11 @@ big_integer& big_integer::operator>>=(int rhs) {
     shift %= 64;
     uint64_t carry = 0;
     uint64_t mask = (1ULL << (shift)) - 1ULL;
-    for (uint64_t & i : _module) {
-        uint64_t new_carry = i & mask;
-        i >>= shift;
+    for (size_t i = _module.size(); i-- > 0;) {
+        uint64_t new_carry = _module[i] & mask;
+        _module[i] >>= shift;
         carry <<= (64ULL - shift);
-        i += carry;
+        _module[i] += carry;
         carry = new_carry;
     }
     shrink();
