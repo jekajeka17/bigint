@@ -23,8 +23,8 @@ struct big_integer
     big_integer& operator+=(big_integer const& rhs);
     big_integer& operator-=(big_integer const& rhs);
     big_integer& operator*=(big_integer const& rhs);
-//    big_integer& operator/=(big_integer const& rhs);
-//    big_integer& operator%=(big_integer const& rhs);
+    big_integer& operator/=(big_integer const& rhs);    // TODO
+    big_integer& operator%=(big_integer const& rhs);    // TODO
 
     big_integer& operator&=(big_integer const& rhs);
     big_integer& operator|=(big_integer const& rhs);
@@ -37,8 +37,8 @@ struct big_integer
     big_integer operator-() const;
     big_integer operator~() const;
 
-    big_integer& operator++();      // ++i, return incremented reference to *this
-    const big_integer operator++(int);    // i++, return incremented copy of *this
+    big_integer& operator++();
+    const big_integer operator++(int);
 
     big_integer& operator--();
     const big_integer operator--(int);
@@ -66,6 +66,9 @@ private:
     int8_t module_compare(big_integer const &rhs) const;
     int8_t sign_compare(big_integer const& rhs) const;
 
+    big_integer to_two_comp(size_t size) const;
+    big_integer from_two_comp() const;
+
     std::vector<uint64_t> _module;
     bool _sign;
 };
@@ -73,8 +76,8 @@ private:
 big_integer operator+(big_integer a, big_integer const& b);
 big_integer operator-(big_integer a, big_integer const& b);
 big_integer operator*(big_integer a, big_integer const& b);
-//big_integer operator/(big_integer a, big_integer const& b);
-//big_integer operator%(big_integer a, big_integer const& b);
+big_integer operator/(big_integer a, big_integer const& b);     // TODO
+big_integer operator%(big_integer a, big_integer const& b);     // TODO
 
 big_integer operator&(big_integer a, big_integer const& b);
 big_integer operator|(big_integer a, big_integer const& b);

@@ -159,3 +159,36 @@ big_integer& big_integer::sub(const big_integer &rhs) {
     shrink();
     return *this;
 }
+
+big_integer big_integer::to_two_comp(size_t size) const {
+    big_integer res = *this;
+    res._sign = false;
+
+    if (_sign) {
+        for (uint64_t & d : res._module) {
+            d = ~d;
+        }
+        res._module.resize(size, ~static_cast<uint64_t>(0));
+        ++res;
+    } else {
+        res._module.resize(size, 0);
+    }
+
+    return res;
+}
+
+big_integer big_integer::from_two_comp() const {
+    big_integer res = *this;
+
+    res._sign = !res._module.empty() && (res._module[res._module.size() - 1] != 0);
+
+    if (res._sign) {
+        ++res;
+        for (uint64_t & d : res._module) {
+            d = ~d;
+        }
+    }
+    res.shrink();
+
+    return res;
+}

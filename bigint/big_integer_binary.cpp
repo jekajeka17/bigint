@@ -6,47 +6,50 @@ big_integer big_integer::operator~() const {
 }
 
 big_integer& big_integer::operator&=(big_integer const& rhs) {
-    size_t op_size = std::max(_module.size(), rhs._module.size());
-    _module.reserve(op_size);
+    size_t op_size = std::max(_module.size(), rhs._module.size()) + 1;
+
+    big_integer op0 = this->to_two_comp(op_size);
+    big_integer op1 = rhs.to_two_comp(op_size);
+
     for (size_t i = 0; i < op_size; ++i) {
-        uint64_t d = digit(i) & rhs.digit(i);
-        if (i < _module.size()) {
-            _module[i] = d;
-        } else {
-            _module.push_back(d);
-        }
+        op0._module[i] &= op1._module[i];
     }
-    shrink();
+
+    *this = op0.from_two_comp();
+    this->shrink();
+
     return *this;
 }
 
 big_integer& big_integer::operator|=(big_integer const& rhs) {
-    size_t op_size = std::max(_module.size(), rhs._module.size());
-    _module.reserve(op_size);
+    size_t op_size = std::max(_module.size(), rhs._module.size()) + 1;
+
+    big_integer op0 = this->to_two_comp(op_size);
+    big_integer op1 = rhs.to_two_comp(op_size);
+
     for (size_t i = 0; i < op_size; ++i) {
-        uint64_t d = digit(i) | rhs.digit(i);
-        if (i < _module.size()) {
-            _module[i] = d;
-        } else {
-            _module.push_back(d);
-        }
+        op0._module[i] |= op1._module[i];
     }
-    shrink();
+
+    *this = op0.from_two_comp();
+    this->shrink();
+
     return *this;
 }
 
 big_integer& big_integer::operator^=(big_integer const& rhs) {
-    size_t op_size = std::max(_module.size(), rhs._module.size());
-    _module.reserve(op_size);
+    size_t op_size = std::max(_module.size(), rhs._module.size()) + 1;
+
+    big_integer op0 = this->to_two_comp(op_size);
+    big_integer op1 = rhs.to_two_comp(op_size);
+
     for (size_t i = 0; i < op_size; ++i) {
-        uint64_t d = digit(i) ^ rhs.digit(i);
-        if (i < _module.size()) {
-            _module[i] = d;
-        } else {
-            _module.push_back(d);
-        }
+        op0._module[i] ^= op1._module[i];
     }
-    shrink();
+
+    *this = op0.from_two_comp();
+    this->shrink();
+
     return *this;
 }
 
@@ -91,6 +94,9 @@ big_integer& big_integer::operator<<=(int rhs) {
 }
 
 big_integer& big_integer::operator>>=(int rhs) {
+    bool mem_sign = _sign;
+    _sign = false;
+
     auto shift = static_cast<size_t>(rhs);
     if (shift >= 64) {
         size_t cnt = shift / 64;
@@ -112,6 +118,9 @@ big_integer& big_integer::operator>>=(int rhs) {
         carry = new_carry;
     }
     shrink();
+    if (mem_sign) {
+        *this = -*this - 1;
+    }
     return *this;
 }
 
