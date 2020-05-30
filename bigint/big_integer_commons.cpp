@@ -10,6 +10,9 @@ big_integer& big_integer::operator=(big_integer const& other) {
 }
 
 std::string to_string(const big_integer &a) {
+    if (a == 0) {
+        return "0";
+    }
     std::string s;
     big_integer tmp = a;
     while (tmp != 0) {
@@ -22,6 +25,7 @@ std::string to_string(const big_integer &a) {
     }
 
     std::reverse(s.begin(), s.end());
+
     return s;
 }
 
