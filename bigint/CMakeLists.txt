@@ -13,6 +13,8 @@ add_executable(
         big_integer_commons.cpp
         big_integer_cmp.cpp
         big_integer_binary.cpp
+        shared_pointer.h
+        vector.h
         main.cpp
 )
 
@@ -26,6 +28,8 @@ add_executable(
         big_integer_commons.cpp
         big_integer_cmp.cpp
         big_integer_binary.cpp
+        shared_pointer.h
+        vector.h
         gtest/gtest-all.cc
         gtest/gtest.h
         gtest/gtest_main.cc)
